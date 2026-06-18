@@ -26,12 +26,20 @@ def index():
 
 @app.route('/cadastro', methods=['POST'])
 def criar_cadastro():
-    cpf = request.form['cpf']
-    primeiro_nome= request.form['primeiro_nome']
-    sobrenome = request.form['sobrenome']
-    idade = request.form['idade']
+    try:
+        cpf = request.form['cpf']
+        primeiro_nome= request.form['primeiro_nome']
+        sobrenome = request.form['sobrenome']
+        idade = request.form['idade']
 
-    conexao = mysql.connector.connect(**bd_config)
-    curso = conexao.cursor()
+        conexao = mysql.connector.connect(**bd_config)
+        curso = conexao.cursor()
 
-    query = "INSERT INTO cliente1 (CPF, PRIMEIRO_NOME, SOBRENOME, IDADE) VALUES (%s, %s, %s, %s)"
+        query = "INSERT INTO cliente1 (CPF, PRIMEIRO_NOME, SOBRENOME, IDADE) VALUES (%s, %s, %s, %s)"
+        curso.execute(query, (cpf , primeiro_nome, sobrenome, idade))
+
+        curso.commit()
+        curso.close()
+        conexao.close()
+    except mysql.connector.Error as err:
+        return f"Erro ao gravar no Banco: {err}"
