@@ -24,7 +24,7 @@ bd_config = {
 def index():
     return render_template('index.html')
 
-@app.route('/cadastro', methods=['POST'])
+@app.route('/cadastrar', methods=['POST'])
 def criar_cadastro():
     try:
         cpf = request.form['cpf']
@@ -43,3 +43,8 @@ def criar_cadastro():
         conexao.close()
     except mysql.connector.Error as err:
         return f"Erro ao gravar no Banco: {err}"
+
+
+
+if __name__ == '__main__':
+    app.run(debug=True)
