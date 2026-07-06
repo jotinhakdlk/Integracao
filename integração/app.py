@@ -14,8 +14,9 @@ app = Flask(__name__)
 bd_config = {
     'host': 'localhost',
     'user': 'root',
-    'password': '',
-    'database': 'cadastro1'
+    'password': 'escola',
+    'database': 'cadastro1',
+    'ssl_disabled': True
 }
 
 ## Criacao de rota para arquivo html principal
@@ -38,9 +39,11 @@ def criar_cadastro():
         query = "INSERT INTO cliente1 (CPF, PRIMEIRO_NOME, SOBRENOME, IDADE) VALUES (%s, %s, %s, %s)"
         curso.execute(query, (cpf , primeiro_nome, sobrenome, idade))
 
-        curso.commit()
+        conexao.commit()
         curso.close()
         conexao.close()
+
+        return f"<h3> Cliente {primeiro_nome} gravado com sucesso!</h3><br><a href='/'>Voltar para o início</a>"
     except mysql.connector.Error as err:
         return f"Erro ao gravar no Banco: {err}"
 
