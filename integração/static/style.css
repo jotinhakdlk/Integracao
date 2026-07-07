@@ -55,3 +55,18 @@ button{
 button:hover{
     background-color: #03396c;
 }
+
+th{
+    border-color: #ffffff;
+    border-style: solid;
+    border-radius: 1vh;
+    padding: 0vh 2vh;
+    color: #ffffff;
+    background-color: #005b96;
+    font-size: 2.5vh;
+}
+
+#titulolista{
+    color: #ffffff;
+    font-size: 4vh;
+}

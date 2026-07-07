@@ -23,7 +23,7 @@
 
         <button type="submit">Cadastrar</button>
     </form>
-    <h2>Lista de clientes</h2>
+    <h2 id="titulolista">Lista de clientes</h2>
     <table style = 'border: 1px''>
         <thead>
             <tr>
@@ -34,6 +34,16 @@
                 <th>Ações</th>
             </tr>
         </thead>
+        <tbody>
+            {% for cliente in clientes %}
+                <tr>
+                    <td>{{cliente.CPF}}</td>
+                    <td>{{cliente.PRIMEIRO_NOME}}</td>
+                    <td>{{cliente.SOBRENOME}}</td>
+                    <td>{{cliente.IDADE}}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
     </table>
 </body>
 </html>
