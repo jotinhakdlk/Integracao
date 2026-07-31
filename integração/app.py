@@ -23,8 +23,19 @@ bd_config = {
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    try:
+        conexaoIndex = mysql.connector.connect(**bd_config)
+        cursoIndex = conexaoIndex.cursor(dictionary=True)
 
+        cursoIndex.execute("SELECT * FROM cliente1")
+        lista_clientes = cursoIndex.fetchall()
+
+        cursoIndex.close()
+        conexaoIndex.close()
+
+        return render_template('index.html', clientes = lista_clientes)
+    except mysql.connector.Error as err:
+        return f"Erro ao carregar a lista: {err}"
 @app.route('/cadastrar', methods=['POST'])
 def criar_cadastro():
     try:
