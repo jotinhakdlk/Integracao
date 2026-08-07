@@ -1,7 +1,7 @@
 ## Import do framework,
 ## render_templete para leitura do HTML e reqest para captura de dados
 
-from flask import Flask, render_template, request
+from flask import Flask, render_template, redirect, url_for, request
 
 ## Conexao com sql e python
 
@@ -58,7 +58,19 @@ def criar_cadastro():
     except mysql.connector.Error as err:
         return f"Erro ao gravar no Banco: {err}"
 
+@app.route('/excluir/<cpf>')
+def excluir(cpf):
+    try:
+        conexao = mysql.connector.connect(**bd_config)
+        curso = conexao.cursor()
+        curso.execute("DELETE FROM cliente1 WHERE CPF = %s", (cpf,))
+        conexao.commit()
+        curso.close()
+        conexao.close()
 
+        return redirect(url_for('index'))
+    except mysql.connector.Error as err:
+        return f"Erro ao deletar usuário: {err}"
 
 if __name__ == '__main__':
     app.run(debug=True)
